@@ -22,17 +22,66 @@ const Home = () => {
             <div className="w-6 h-6 bg-gray-100 rounded-full border mr-1" />
             키움증권 챗봇
           </div>
-          <div className="p-5 bg-white border rounded-2xl">
+          <div className="p-5 bg-white border rounded-2xl  max-w-[30rem]">
             안녕하세요. 이건 공유하기 테스트입니다. 이 텍스트를 공유하려면
             아래의 버튼을 클릭해주세요.
             <button
-              className="border p-4 w-full"
+              className="border p-4 w-full mt-1 bg-pink-200 rounded-2xl"
               onClick={() => {
                 if (navigator.share) {
                   navigator
                     .share({
                       title: "웹 쉐어 API",
                       text: text,
+                    })
+                    .then(() => console.log("Successful share"))
+                    .catch((error) => console.log("Error sharing", error));
+                }
+              }}
+            >
+              공유하기
+            </button>
+          </div>
+
+          <div className="flex items-center mt-6 mb-2">
+            <div className="w-6 h-6 bg-gray-100 rounded-full border mr-1" />
+            키움증권 챗봇
+          </div>
+          <div className="p-5 bg-white border rounded-2xl max-w-[30rem]">
+            두번째 공유하기 테스트 텍스트입니다. 이 텍스트를 공유할 수 있습니다.
+            <button
+              className="border p-4 w-full mt-1 bg-pink-200 rounded-2xl"
+              onClick={() => {
+                if (navigator.share) {
+                  navigator
+                    .share({
+                      title: "이메일 보내기",
+                      text: "두번째 공유하기 테스트 텍스트입니다. 이 텍스트를 공유할 수 있습니다.",
+                    })
+                    .then(() => console.log("Successful share"))
+                    .catch((error) => console.log("Error sharing", error));
+                }
+              }}
+            >
+              공유하기
+            </button>
+          </div>
+
+          <div className="flex items-center mt-6 mb-2">
+            <div className="w-6 h-6 bg-gray-100 rounded-full border mr-1" />
+            키움증권 챗봇
+          </div>
+          <div className="p-5 bg-white border rounded-2xl max-w-[30rem]">
+            세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만
+            공유되는 텍스트는 길게 만들었습니다.
+            <button
+              className="border p-4 w-full mt-1 bg-pink-200 rounded-2xl"
+              onClick={() => {
+                if (navigator.share) {
+                  navigator
+                    .share({
+                      title: "이메일",
+                      text: "세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만 공유되는 텍스트는 길게 만들었습니다. 세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만 공유되는 텍스트는 길게 만들었습니다. 세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만 공유되는 텍스트는 길게 만들었습니다. 세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만 공유되는 텍스트는 길게 만들었습니다. 세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만 공유되는 텍스트는 길게 만들었습니다.",
                     })
                     .then(() => console.log("Successful share"))
                     .catch((error) => console.log("Error sharing", error));
