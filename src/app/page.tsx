@@ -49,6 +49,7 @@ const Home = () => {
           </div>
           <div className="p-5 bg-white border rounded-2xl max-w-[30rem]">
             두번째 공유하기 테스트 텍스트입니다. 이 텍스트를 공유할 수 있습니다.
+            1과 2는 같은 기능입니다.
             <button
               className="border p-4 w-full mt-1 bg-pink-200 rounded-2xl"
               onClick={() => {
@@ -56,7 +57,7 @@ const Home = () => {
                   navigator
                     .share({
                       title: "이메일 보내기",
-                      text: "두번째 공유하기 테스트 텍스트입니다. 이 텍스트를 공유할 수 있습니다.",
+                      text: "두번째 공유하기 테스트 텍스트입니다. 이 텍스트를 공유할 수 있습니다. 1과 2는 같은 기능입니다.",
                     })
                     .then(() => console.log("Successful share"))
                     .catch((error) => console.log("Error sharing", error));
@@ -72,20 +73,12 @@ const Home = () => {
             키움증권 챗봇
           </div>
           <div className="p-5 bg-white border rounded-2xl max-w-[30rem]">
-            세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만
-            공유되는 텍스트는 길게 만들었습니다.
+            세번쨰 공유하기. 이건 web api가 아닌 바로 이메일을 띄우는
+            형식입니다. 공유하기와는 다른 방법입니다.
             <button
               className="border p-4 w-full mt-1 bg-pink-200 rounded-2xl"
               onClick={() => {
-                if (navigator.share) {
-                  navigator
-                    .share({
-                      title: "이메일",
-                      text: "세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만 공유되는 텍스트는 길게 만들었습니다. 세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만 공유되는 텍스트는 길게 만들었습니다. 세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만 공유되는 텍스트는 길게 만들었습니다. 세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만 공유되는 텍스트는 길게 만들었습니다. 세번쨰 공유하기. 긴 텍스트를 포함합니다. 텍스트는 생략하지만 공유되는 텍스트는 길게 만들었습니다.",
-                    })
-                    .then(() => console.log("Successful share"))
-                    .catch((error) => console.log("Error sharing", error));
-                }
+                window.location.href = `mailto:someone@example.com?subject=RAG 답변 공유&body=세번쨰 공유하기. 이건 web api가 아닌 바로 이메일을 띄우는 형식입니다. 공유하기와는 다른 방법입니다.`;
               }}
             >
               공유하기
