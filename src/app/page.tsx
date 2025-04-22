@@ -1,102 +1,54 @@
 "use client";
+import { useEffect, useRef } from "react";
 
-import React, { useEffect } from "react";
-import TextareaAutosize from "react-textarea-autosize";
-
-const Home = () => {
-  const [text, setText] = React.useState("");
-
+// 커스텀 훅
+const useKeyboardVisualViewport = (ref: React.RefObject<HTMLDivElement>) => {
   useEffect(() => {
-    setText(
-      "안녕하세요. 이건 공유하기 테스트입니다. 이 텍스트를 공유하려면 아래의 버튼을 클릭해주세요."
-    );
-  }, []);
+    if (!window.visualViewport || !ref.current) return;
+
+    const handleResize = () => {
+      const height = window.visualViewport!.height;
+      ref.current!.style.height = `${height - 30}px`; // 여유 공간
+      window.scrollTo(0, 40); // 헤더 보이게
+    };
+
+    window.visualViewport.addEventListener("resize", handleResize);
+    return () => {
+      if (!window.visualViewport) return;
+      window.visualViewport.removeEventListener("resize", handleResize);
+    };
+  }, [ref]);
+};
+
+// 컴포넌트
+export default function ChatLayout() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  useKeyboardVisualViewport(wrapperRef as React.RefObject<HTMLDivElement>);
+
   return (
-    <div className="bg-white w-full h-full min-w-[5rem] overflow-hidden">
-      <main className="w-full h-full flex flex-col overflow-hidden pb-[5rem]">
-        <header className="h-20 border-b flex justify-center items-center">
-          챗봇
-        </header>
-        <section className="h-full basis-[100%] flex flex-col overflow-y-auto overflow-x-hidden p-4">
-          <div className="flex items-center mb-2">
-            <div className="w-6 h-6 bg-gray-100 rounded-full border mr-1" />
-            키움증권 챗봇
-          </div>
-          <div className="p-5 bg-white border rounded-2xl  max-w-[30rem]">
-            안녕하세요. 이건 공유하기 테스트입니다. 이 텍스트를 공유하려면
-            아래의 버튼을 클릭해주세요.
-            <button
-              className="border p-4 w-full mt-1 bg-pink-200 rounded-2xl"
-              onClick={() => {
-                if (navigator.share) {
-                  navigator
-                    .share({
-                      title: "웹 쉐어 API",
-                      text: text,
-                    })
-                    .then(() => console.log("Successful share"))
-                    .catch((error) => console.log("Error sharing", error));
-                }
-              }}
-            >
-              공유하기
-            </button>
-          </div>
-
-          <div className="flex items-center mt-6 mb-2">
-            <div className="w-6 h-6 bg-gray-100 rounded-full border mr-1" />
-            키움증권 챗봇
-          </div>
-          <div className="p-5 bg-white border rounded-2xl max-w-[30rem]">
-            두번째 공유하기 테스트 텍스트입니다. 이 텍스트를 공유할 수 있습니다.
-            1과 2는 같은 기능입니다.
-            <button
-              className="border p-4 w-full mt-1 bg-pink-200 rounded-2xl"
-              onClick={() => {
-                if (navigator.share) {
-                  navigator
-                    .share({
-                      title: "이메일 보내기",
-                      text: "두번째 공유하기 테스트 텍스트입니다. 이 텍스트를 공유할 수 있습니다. 1과 2는 같은 기능입니다.",
-                    })
-                    .then(() => console.log("Successful share"))
-                    .catch((error) => console.log("Error sharing", error));
-                }
-              }}
-            >
-              공유하기
-            </button>
-          </div>
-
-          <div className="flex items-center mt-6 mb-2">
-            <div className="w-6 h-6 bg-gray-100 rounded-full border mr-1" />
-            키움증권 챗봇
-          </div>
-          <div className="p-5 bg-white border rounded-2xl max-w-[30rem]">
-            세번쨰 공유하기. 이건 web api가 아닌 바로 이메일을 띄우는
-            형식입니다. 공유하기와는 다른 방법입니다.
-            <button
-              className="border p-4 w-full mt-1 bg-pink-200 rounded-2xl"
-              onClick={() => {
-                window.location.href = `mailto:someone@example.com?subject=RAG 답변 공유&body=세번쨰 공유하기. 이건 web api가 아닌 바로 이메일을 띄우는 형식입니다. 공유하기와는 다른 방법입니다.`;
-              }}
-            >
-              공유하기
-            </button>
-          </div>
-        </section>
-        <div className="fixed bottom-0 h-[5rem] bg-white w-full border-t flex items-center p-4">
-          <TextareaAutosize
-            className="border w-full"
-            minRows={1}
-            maxRows={2}
-            placeholder="내용을 입력하세요..."
-          />
-        </div>
+    <div ref={wrapperRef} id="root" className="absolute inset-0 flex flex-col">
+      <header className="shrink-0 h-[60px] bg-white border-b px-4 flex items-center">
+        헤더 영역
+      </header>
+      <main className="flex-1 overflow-auto px-4 py-2 bg-gray-100">
+        본문 내용
       </main>
-
-      <></>
+      <div className="h-[50px] shrink-0 bg-white border-t">
+        <input
+          onFocus={() => {
+            setTimeout(() => {
+              if (!wrapperRef.current) return;
+              wrapperRef.current.scrollTo({
+                top: wrapperRef.current.scrollHeight,
+                behavior: "smooth",
+              });
+            }, 100); // 키보드 올라오는 시간
+          }}
+          type="text"
+          className="w-full h-full px-4 text-[16px]" // 자동 확대 방지
+          placeholder="메시지를 입력하세요"
+        />
+      </div>
     </div>
   );
-};
-export default Home;
+}
