@@ -101,13 +101,11 @@ export default function ChatbotLayout({
               transform="translate(10 16)"
               style={{
                 fontSize: "11px",
-                fontFamily: "'Nanum Pen Script', cursive",
-                fill: "#fff",
+                fontFamily: "'Montserrat Alternates', cursive",
+                fill: "#B0F0F0",
               }}
             >
-              <tspan x="0" y="0">
-                AI
-              </tspan>
+              AI
             </text>
           </svg>
         </div>
